@@ -7,7 +7,7 @@ var goal = 7
 
 
 func reset():
-	score = 6
+	score = 0
 	score_changed.emit(score)
 
 func add(points:int):
