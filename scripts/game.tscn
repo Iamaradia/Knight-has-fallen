@@ -471,9 +471,9 @@ script = ExtResource("3_x8pbt")
 [node name="Timer" type="Label" parent="player1/Camera2D/CanvasLayer"]
 z_index = 101
 texture_filter = 1
-offset_left = 1000.0
+offset_left = 960.0
 offset_top = 30.0
-offset_right = 1040.0
+offset_right = 1000.0
 offset_bottom = 80.0
 scale = Vector2(2, 2)
 label_settings = SubResource("LabelSettings_n26xj")
@@ -483,7 +483,7 @@ script = ExtResource("5_2b28d")
 [node name="Sprite2D" type="Sprite2D" parent="player1/Camera2D/CanvasLayer"]
 z_index = 100
 texture_filter = 1
-position = Vector2(1040, 61)
+position = Vector2(1000, 61)
 scale = Vector2(0.28, 0.28)
 texture = ExtResource("6_5w37d")
 
