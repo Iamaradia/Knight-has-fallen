@@ -1,0 +1,142 @@
+[gd_scene load_steps=19 format=3 uid="uid://do6harahia6fo"]
+
+[ext_resource type="Texture2D" uid="uid://ckxjy23y0gh8t" path="res://assets/sprites/slime_green.png" id="1_ocjgv"]
+[ext_resource type="Script" uid="uid://c6bc8e2o1tfbm" path="res://slime.gd" id="2_b2vcn"]
+[ext_resource type="PackedScene" uid="uid://d4y2r43sqipc" path="res://scripts/killzone.tscn" id="3_i4mj7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ocjgv"]
+atlas = ExtResource("1_ocjgv")
+region = Rect2(24, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b2vcn"]
+atlas = ExtResource("1_ocjgv")
+region = Rect2(48, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4mj7"]
+atlas = ExtResource("1_ocjgv")
+region = Rect2(72, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_osvwb"]
+atlas = ExtResource("1_ocjgv")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xs4v3"]
+atlas = ExtResource("1_ocjgv")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a6h48"]
+atlas = ExtResource("1_ocjgv")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ln0b5"]
+atlas = ExtResource("1_ocjgv")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jvnj3"]
+atlas = ExtResource("1_ocjgv")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nx51t"]
+atlas = ExtResource("1_ocjgv")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hg5mh"]
+atlas = ExtResource("1_ocjgv")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ea3mx"]
+atlas = ExtResource("1_ocjgv")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqfva"]
+atlas = ExtResource("1_ocjgv")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_osvwb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ocjgv")
+}, {
+"duration": 8.0,
+"texture": SubResource("AtlasTexture_b2vcn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4mj7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_osvwb")
+}, {
+"duration": 1.01,
+"texture": SubResource("AtlasTexture_xs4v3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a6h48")
+}],
+"loop": false,
+"name": &"death",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ln0b5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jvnj3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nx51t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hg5mh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ea3mx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xqfva")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ocjgv"]
+size = Vector2(14, 11)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ocjgv"]
+radius = 7.0
+
+[node name="Slime" type="AnimatedSprite2D"]
+position = Vector2(0, -10)
+sprite_frames = SubResource("SpriteFrames_osvwb")
+animation = &"death"
+autoplay = "idle"
+frame = 5
+frame_progress = 1.0
+script = ExtResource("2_b2vcn")
+
+[node name="Killzone" parent="." instance=ExtResource("3_i4mj7")]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
+position = Vector2(0, 6.5)
+shape = SubResource("RectangleShape2D_ocjgv")
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+position = Vector2(0, 6)
+target_position = Vector2(-11, 0)
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+position = Vector2(0, 6)
+target_position = Vector2(11, 0)
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 5
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, 5)
+shape = SubResource("CircleShape2D_ocjgv")
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
